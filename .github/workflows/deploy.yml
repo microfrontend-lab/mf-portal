@@ -1,0 +1,52 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+env:
+  REGISTRY_URL: https://storage.googleapis.com/mf-registry/registry.json
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm stylelint
+      - run: pnpm test
+
+      - run: pnpm build
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Sync hashed assets (long cache)
+        run: |
+          gsutil -m -h "Cache-Control:public, max-age=31536000, immutable" \
+            rsync -r -x "^index\.html$" dist gs://mf-portal
+
+      - name: Upload index.html (must revalidate)
+        run: |
+          gsutil -h "Cache-Control:no-cache" \
+            cp dist/index.html gs://mf-portal/index.html

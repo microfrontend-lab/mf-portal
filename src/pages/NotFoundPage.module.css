@@ -1,0 +1,7 @@
+.page {
+  padding: var(--space-8);
+}
+
+.link {
+  color: var(--color-primary);
+}

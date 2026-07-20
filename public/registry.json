@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "widgets": [
+    {
+      "name": "todoApp",
+      "url": "http://localhost:3001/remoteEntry.js",
+      "module": "./TodoWidget",
+      "route": "/apps/todo",
+      "title": "Todo",
+      "icon": "check-square",
+      "enabled": true
+    },
+    {
+      "name": "chartApp",
+      "url": "http://localhost:3002/remoteEntry.js",
+      "module": "./ChartWidget",
+      "route": "/apps/chart",
+      "title": "Charts",
+      "icon": "bar-chart-3",
+      "enabled": true
+    }
+  ]
+}
