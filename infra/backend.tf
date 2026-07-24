@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "mf-tfstate"
+    bucket = "module-federation-lab-tfstate"
     prefix = "mf-portal"
   }
 }

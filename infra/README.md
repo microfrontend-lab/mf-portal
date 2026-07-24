@@ -1,16 +1,16 @@
 # mf-portal infra
 
-Terraform for the `gs://mf-portal` bucket only.
+OpenTofu for the `gs://mf-portal` bucket only.
 
 ```bash
 cp terraform.tfvars.example terraform.tfvars
 # edit terraform.tfvars
-terraform init
-terraform plan
-terraform apply
+tofu init
+tofu plan
+tofu apply
 ```
 
-Remote state lives in `gs://mf-tfstate` under the `mf-portal` prefix.
+Remote state lives in `gs://module-federation-lab-tfstate` under the `mf-portal` prefix.
 
 No CORS configuration here — the portal's own assets are always loaded
 same-origin. CORS matters on the *other* buckets this portal fetches
