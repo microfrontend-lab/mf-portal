@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { NavLink } from 'react-router';
 import type { ReactNode } from 'react';
 import { Sun, Moon } from 'lucide-react';
 import { resolveIcon } from '@/utils/icon';
@@ -13,24 +13,29 @@ export interface LayoutProps {
   children: ReactNode;
 }
 
+function navLinkClass({ isActive }: { isActive: boolean }) {
+  return isActive ? `${styles.navLink} ${styles.navLinkActive}` : styles.navLink;
+}
+
 export function Layout({ widgets, theme, onToggleTheme, children }: LayoutProps) {
   return (
     <div className={styles.shell}>
-      <aside className={styles.sidebar}>
-        <Link to="/" className={styles.brand}>
-          mf-portal
-        </Link>
+      <header className={styles.topbar}>
+        <NavLink to="/" className={styles.brand}>
+          <img src="/logo.png" alt="" className={styles.logo} />
+          <span>Portal</span>
+        </NavLink>
         <nav className={styles.nav}>
-          <Link to="/" className={styles.navLink}>
+          <NavLink to="/" end className={navLinkClass}>
             Home
-          </Link>
+          </NavLink>
           {widgets.map((widget) => {
             const Icon = resolveIcon(widget.icon);
             return (
-              <Link key={widget.name} to={widget.route} className={styles.navLink}>
-                <Icon size={18} aria-hidden="true" />
+              <NavLink key={widget.name} to={widget.route} className={navLinkClass}>
+                <Icon size={16} aria-hidden="true" />
                 <span>{widget.title}</span>
-              </Link>
+              </NavLink>
             );
           })}
         </nav>
@@ -40,10 +45,9 @@ export function Layout({ widgets, theme, onToggleTheme, children }: LayoutProps)
           onClick={onToggleTheme}
           aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
         >
-          {theme === 'dark' ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
-          <span>{theme === 'dark' ? 'Light mode' : 'Dark mode'}</span>
+          {theme === 'dark' ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
         </button>
-      </aside>
+      </header>
       <main className={styles.content}>{children}</main>
     </div>
   );

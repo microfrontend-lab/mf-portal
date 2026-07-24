@@ -15,12 +15,15 @@ export function HomePage({ widgets, status, error }: HomePageProps) {
   return (
     <Stack gap={6} className={styles.page}>
       <Stack gap={1}>
-        <Text as="h1" size="xl">
-          mf-portal
-        </Text>
         <Text muted>
-          Independently deployed applications, composed at runtime via Module Federation.
+          This demo showcases Module Federation — an architectural pattern for decomposing a
+          frontend into independently built, independently deployed applications, similar to
+          microservices on the server side. Apps are composed together at runtime, not bundled
+          together at build time, so a team can ship its app without the portal ever being
+          rebuilt.
         </Text>
+        <Text muted>You can switch between the different applications via the top panel.</Text>
+        <Text muted>All apps share the same theme!</Text>
       </Stack>
 
       {status === 'loading' && <Text muted>Loading registry…</Text>}
