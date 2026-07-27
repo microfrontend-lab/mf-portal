@@ -22,7 +22,7 @@ export function Layout({ widgets, theme, onToggleTheme, children }: LayoutProps)
     <div className={styles.shell}>
       <header className={styles.topbar}>
         <NavLink to="/" className={styles.brand}>
-          <img src="/logo.png" alt="" className={styles.logo} />
+          <img src={`${process.env.PUBLIC_PATH}logo.png`} alt="" className={styles.logo} />
           <span>Portal</span>
         </NavLink>
         <nav className={styles.nav}>

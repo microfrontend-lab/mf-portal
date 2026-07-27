@@ -3,6 +3,7 @@ import { defineConfig } from '@rspack/cli';
 import { rspack } from '@rspack/core';
 
 const isDev = process.env.NODE_ENV !== 'production';
+const publicPath = isDev ? '/' : '/mf-portal/';
 
 export default defineConfig({
   entry: './src/index.tsx',
@@ -13,7 +14,7 @@ export default defineConfig({
     // <script> tag in index.html needs a build-time-known prefix so deep
     // links served via the SPA not_found_page fallback (e.g. /apps/chart)
     // resolve correctly.
-    publicPath: isDev ? '/' : '/mf-portal/',
+    publicPath,
     uniqueName: 'mfPortal',
   },
   resolve: {
@@ -58,6 +59,7 @@ export default defineConfig({
     new rspack.HtmlRspackPlugin({ template: './public/index.html' }),
     new rspack.DefinePlugin({
       'process.env.REGISTRY_URL': JSON.stringify(process.env.REGISTRY_URL ?? ''),
+      'process.env.PUBLIC_PATH': JSON.stringify(publicPath),
     }),
     new rspack.CopyRspackPlugin({
       patterns: [{ from: 'resources', to: '.', noErrorOnMissing: true }],
