@@ -1,12 +1,12 @@
 :root {
   --font-family-base:
     -apple-system,
-    BlinkMacSystemFont,
+    blinkmacsystemfont,
     'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
+    roboto,
+    oxygen,
+    ubuntu,
+    cantarell,
     'Fira Sans',
     'Droid Sans',
     'Helvetica Neue',
@@ -21,6 +21,7 @@
   --color-primary: #71bedb;
   --color-primary-hover: #58a8c7;
   --color-success: #3fb27f;
+  --color-warning: #e0983f;
   --color-danger: #e5484d;
 
   --space-1: 4px;
@@ -46,6 +47,10 @@
   --font-weight-bold: 700;
 
   --shadow-card: 0 1px 3px rgb(0 0 0 / 30%);
+
+  --color-on-primary: #fff;
+  --gradient-checked: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  --transition-fast: 120ms ease;
 }
 
 [data-theme='light'] {

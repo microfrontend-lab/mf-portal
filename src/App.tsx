@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from 'react';
+import { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router';
 import { Layout } from '@/components/Layout';
 import { RemoteWidget } from '@/components/RemoteWidget';
@@ -8,15 +8,10 @@ import { HomePage } from '@/pages/HomePage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { useRegistry } from '@/hooks/useRegistry';
 import { useTheme } from '@/hooks/useTheme';
-import { initFederation } from '@/federation/loadRemote';
 
 export default function App() {
   const { widgets, status, error } = useRegistry();
   const { theme, toggleTheme } = useTheme();
-
-  useEffect(() => {
-    if (status === 'success') initFederation(widgets);
-  }, [status, widgets]);
 
   return (
     <BrowserRouter>

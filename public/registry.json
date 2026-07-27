@@ -18,6 +18,15 @@
       "title": "Charts",
       "icon": "bar-chart-3",
       "enabled": true
+    },
+    {
+      "name": "passGenApp",
+      "url": "http://localhost:3003/remoteEntry.js",
+      "module": "./PassGenWidget",
+      "route": "/apps/passgen",
+      "title": "Password Generator",
+      "icon": "key-round",
+      "enabled": true
     }
   ]
 }
