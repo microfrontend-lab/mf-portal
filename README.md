@@ -61,8 +61,15 @@ redeployed for that to work.
 
 ## Deploy
 
+Deployed to **Firebase Hosting** (`https://mf-portal.web.app`), not a GCS
+bucket like the other repos — see `ARCHITECTURE.md` §11.1 for why. Config
+lives in `firebase.json` + `.firebaserc`; `{"source": "**", "destination":
+"/index.html"}` gives deep links (e.g. `/apps/chart`) a working SPA fallback
+on refresh, which GCS's own bucket-hosting mode never provided here.
+
 `.github/workflows/deploy.yml` builds (with `REGISTRY_URL` pointed at the
-production `mf-registry` bucket) and syncs `dist/` to `gs://mf-portal` on
-push to `main`, via Workload Identity Federation. `index.html` is uploaded
-with `Cache-Control: no-cache`; hashed chunks get a one-year immutable
-cache. See `infra/README.md` for the bucket Terraform.
+production `mf-registry` bucket) and runs `firebase deploy --only hosting`
+on push to `main`, via Workload Identity Federation — the deploying service
+account needs `roles/firebasehosting.admin`.
+
+To deploy manually: `pnpm build && pnpm exec firebase deploy --only hosting`.

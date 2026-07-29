@@ -1,6 +1,13 @@
 # mf-portal infra
 
-OpenTofu for the `gs://mf-portal` bucket only.
+> **STALE — pending deletion.** `mf-portal` now deploys to Firebase Hosting,
+> not this bucket (see `../ARCHITECTURE.md` §11.1). The bucket and IAM
+> binding below have already been destroyed via `tofu destroy`; this
+> directory is kept only until the Firebase Hosting deploy has been verified
+> stable through a real CI run, per the TODO in `../ARCHITECTURE.md` §11.1.
+> Do not `tofu apply` this — it would recreate a bucket nothing reads from.
+
+OpenTofu for the `gs://mf-portal` bucket only. (See stale notice above.)
 
 ```bash
 cp terraform.tfvars.example terraform.tfvars

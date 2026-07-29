@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "default": "module-federation-lab"
+  },
+  "targets": {
+    "module-federation-lab": {
+      "hosting": {
+        "portal": ["mf-portal"]
+      }
+    }
+  }
+}

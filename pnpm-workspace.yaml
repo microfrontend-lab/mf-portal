@@ -1,2 +1,4 @@
+allowBuilds:
+  protobufjs: true
 minimumReleaseAgeExclude:
   - stylelint@17.14.1

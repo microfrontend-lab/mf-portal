@@ -32,6 +32,12 @@ jobs:
 
       - run: pnpm build
 
+      # Workload Identity Federation auth also drives the Firebase CLI here:
+      # google-github-actions/auth exports GOOGLE_APPLICATION_CREDENTIALS,
+      # which firebase-tools picks up for non-interactive deploys — no
+      # separate `firebase login:ci` token needed. The deploying identity
+      # needs roles/firebasehosting.admin (granted to gh-actions-deploy@
+      # alongside its existing storage.objectAdmin role).
       - id: auth
         uses: google-github-actions/auth@v2
         with:
@@ -39,14 +45,5 @@ jobs:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
-      - uses: google-github-actions/setup-gcloud@v2
-
-      - name: Sync hashed assets (long cache)
-        run: |
-          gsutil -m -h "Cache-Control:public, max-age=31536000, immutable" \
-            rsync -r -x "^index\.html$" dist gs://mf-portal
-
-      - name: Upload index.html (must revalidate)
-        run: |
-          gsutil -h "Cache-Control:no-cache" \
-            cp dist/index.html gs://mf-portal/index.html
+      - name: Deploy to Firebase Hosting
+        run: pnpm exec firebase deploy --only hosting --project module-federation-lab --non-interactive

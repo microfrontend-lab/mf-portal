@@ -15,4 +15,4 @@ Source: https://github.com/microfrontend-lab/mf-registry
 - Owns layout, navigation, top-level routing, design tokens
 - Knows **zero** remotes at build time — fetches `registry.json` at boot (see `ARCHITECTURE.md` §5)
 - Dev port: 3000
-- Bucket: `gs://mf-portal`
+- Deployed to Firebase Hosting: `https://mf-portal.web.app` (exception to the GCS-bucket pattern other repos use — see `ARCHITECTURE.md` §11.1)
