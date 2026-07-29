@@ -27,6 +27,15 @@
       "title": "Password Generator",
       "icon": "key-round",
       "enabled": true
+    },
+    {
+      "name": "pomodoroApp",
+      "url": "http://localhost:3004/remoteEntry.js",
+      "module": "./PomodoroWidget",
+      "route": "/apps/pomodoro",
+      "title": "Pomodoro",
+      "icon": "timer",
+      "enabled": true
     }
   ]
 }
