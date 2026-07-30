@@ -73,3 +73,37 @@ on push to `main`, via Workload Identity Federation — the deploying service
 account needs `roles/firebasehosting.admin`.
 
 To deploy manually: `pnpm build && pnpm exec firebase deploy --only hosting`.
+
+### One-time provisioning
+
+Not managed by OpenTofu (see `ARCHITECTURE.md` §11.1 for why) — these
+commands were run once, by hand, to stand up the Hosting site and CI's
+permission to deploy to it. Recorded here so the setup is reproducible
+without re-deriving it:
+
+```bash
+# Enable Firebase on the existing GCP project (idempotent; safe to re-run)
+npx firebase-tools projects:addfirebase module-federation-lab
+
+# Create the named Hosting site — this is what gives the mf-portal.web.app
+# URL instead of the project's auto-created default site
+npx firebase-tools hosting:sites:create mf-portal --project module-federation-lab
+
+# Grant the CI deploy service account permission to publish to Hosting,
+# alongside its existing roles/storage.objectAdmin (needed by the other
+# four repos' bucket deploys)
+gcloud projects add-iam-policy-binding module-federation-lab \
+  --member="serviceAccount:gh-actions-deploy@module-federation-lab.iam.gserviceaccount.com" \
+  --role="roles/firebasehosting.admin" \
+  --condition=None
+```
+
+Local `pnpm exec firebase` commands authenticate via whatever Google
+credentials are already active in the shell (`gcloud auth
+application-default login` or an existing `firebase login`) — no separate
+login step was needed here since `gcloud` was already authenticated.
+
+One local-only step, unrelated to Firebase itself: `firebase-tools` pulls in
+`protobufjs`, which has a postinstall script pnpm blocks by default. Run
+`pnpm approve-builds protobufjs` once after `pnpm install` if you see an
+`ERR_PNPM_IGNORED_BUILDS` warning.
