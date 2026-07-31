@@ -36,6 +36,15 @@
       "title": "Pomodoro",
       "icon": "timer",
       "enabled": true
+    },
+    {
+      "name": "purchaseApp",
+      "url": "http://localhost:3006/remoteEntry.js",
+      "module": "./PurchaseWidget",
+      "route": "/apps/purchase",
+      "title": "Purchase",
+      "icon": "credit-card",
+      "enabled": true
     }
   ]
 }
