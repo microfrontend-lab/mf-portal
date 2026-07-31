@@ -1,8 +1,7 @@
-# mf-portal
+# Module Federation Portal
 
-Host shell in the `microfrontend-lab` micro frontend POC. Owns layout,
-navigation, top-level routing, and design tokens. Knows **zero** remotes at
-build time — it discovers and loads them at runtime from `registry.json`.
+A web app Portal that hosts several web applications using module federation. All applications are hosted separately and included in the portal
+as a part of module federation. 
 
 See [`CLAUDE.md`](./CLAUDE.md) for the architecture docs this app must
 conform to.
